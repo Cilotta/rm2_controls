@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>rm2_referee</name>
+    <version>0.1.20</version>
+    <description>A template for ROS packages.</description>
+    <maintainer email="liaoqiayuan@gmail.com">Qiayuan Liao</maintainer>
+
+    <license>BSD</license>
+    <author email="liaoqiayuan@gmail.com">Qiayuan Liao</author>
+
+    <!-- buildtool_depend: dependencies of the build process -->
+    <buildtool_depend>ament_cmake</buildtool_depend>
+    <!-- depend: build, export, and execution dependency -->
+    <depend>rclcpp</depend>
+    <depend>sensor_msgs</depend>
+    <depend>rm2_msgs</depend>
+    <depend>std_msgs</depend>
+    <depend>nav2_msgs</depend>
+    <depend>actionlib</depend>
+    <depend>rm2_common</depend>
+    <depend>tf2_geometry_msgs</depend>
+    <depend>serial</depend>
+
+    <export>
+        <build_type>ament_cmake</build_type>
+    </export>
+</package>

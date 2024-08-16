@@ -1,0 +1,12 @@
+<launch>
+    <rosparam file="$(find rm2_hw)/test/test_imu.yaml" command="load"/>
+
+    <!-- load the controllers -->
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+          output="screen" args="
+        controllers/imu_sensor_controller
+"/>
+
+    <node name="rm2_hw" pkg="rm2_hw" type="rm2_hw" respawn="false"/>
+
+</launch>

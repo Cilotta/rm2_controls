@@ -1,0 +1,27 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/ciler/ros2_ws/install/rm2_msgs/include/**",
+        "/opt/ros/humble/include/**",
+        "/home/ciler/ros2_ws/src/rm2_control/rm2_common/include/**",
+        "/home/ciler/ros2_ws/src/rm2_control/rm2_hw/include/**",
+        "/home/ciler/ros2_ws/src/rm2_control/rm2_msgs/include/**",
+        "/home/ciler/ros2_ws/src/rm2_control/rm2_referee/include/**",
+        "/home/ciler/ros2_ws/src/rm2_control/rm_dbus/include/**",
+        "/home/ciler/ros2_ws/src/rm2_control/rm_gazebo/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

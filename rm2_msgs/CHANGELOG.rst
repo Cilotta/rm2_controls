@@ -16,11 +16,11 @@ Changelog for package rm_msgs
 * Update PowerManagement protocol v1.2
 * Merge branch 'master' into dev/sentry_map
   # Conflicts:
-  #	rm_referee/src/referee_base.cpp
+  #	rm2_referee/src/referee_base.cpp
 * Merge branch 'master' into dev/sentry_map
   # Conflicts:
-  #	rm_referee/include/rm_referee/referee_base.h
-  #	rm_referee/src/referee_base.cpp
+  #	rm2_referee/include/rm2_referee/referee_base.h
+  #	rm2_referee/src/referee_base.cpp
 * Merge pull request `#165 <https://github.com/ye-luo-xi-tui/rm_control/issues/165>`_ from rm-controls/revert-164-Add_engineerui
   Revert "Merge the engineer's ui into master"
 * Revert "Merge the engineer's ui into master"
@@ -34,10 +34,10 @@ Changelog for package rm_msgs
 * Merge branch 'master' into pitch_ui
 * Merge branch 'master' into pitch_ui
   # Conflicts:
-  #	rm_referee/include/rm_referee/referee_base.h
-  #	rm_referee/include/rm_referee/ui/time_change_ui.h
-  #	rm_referee/src/referee_base.cpp
-  #	rm_referee/src/ui/time_change_ui.cpp
+  #	rm2_referee/include/rm2_referee/referee_base.h
+  #	rm2_referee/include/rm2_referee/ui/time_change_ui.h
+  #	rm2_referee/src/referee_base.cpp
+  #	rm2_referee/src/ui/time_change_ui.cpp
 * Merge pull request `#158 <https://github.com/ye-luo-xi-tui/rm_control/issues/158>`_ from chenhuiYu00/dev/power_management
   Update new power management
 * Merge branch 'master' into windwill_auto_fire
@@ -45,12 +45,18 @@ Changelog for package rm_msgs
   Add balance command sender and balance pitch ui
 * Merge branch 'dev/power_management' into dev/balance_cmd_send_power_management
   # Conflicts:
-  #	rm_common/include/rm_common/decision/command_sender.h
+  #	rm2_common
+
+
+/include/rm2_common
+
+
+/decision/command_sender.h
 * Merge remote-tracking branch 'chenhuiYu/dev/power_management' into dev/power_management
 * Merge branch 'master' into dev/balance_cmd_send
   # Conflicts:
-  #	rm_referee/src/referee_base.cpp
-  #	rm_referee/src/ui/time_change_ui.cpp
+  #	rm2_referee/src/referee_base.cpp
+  #	rm2_referee/src/ui/time_change_ui.cpp
 * Merge branch 'master' into dev/power_management
 * Merge pull request `#155 <https://github.com/ye-luo-xi-tui/rm_control/issues/155>`_ from Edwinlinks/for-sentry
   Add key u for sentry fsm.
@@ -75,8 +81,8 @@ Changelog for package rm_msgs
 * Update power management protocol.
 * Merge branch 'master' into dev/ui_refact
   # Conflicts:
-  #	rm_referee/include/rm_referee/common/protocol.h
-  #	rm_referee/src/ui/graph.cpp
+  #	rm2_referee/include/rm2_referee/common/protocol.h
+  #	rm2_referee/src/ui/graph.cpp
 * Merge pull request `#146 <https://github.com/ye-luo-xi-tui/rm_control/issues/146>`_ from ye-luo-xi-tui/master
   0.1.19
 * Add acc data in BalanceState msg.
@@ -114,14 +120,20 @@ Changelog for package rm_msgs
   Modified the msg of engineer  to 'EngineerUi'
 * Merge branch 'master' into multi_dof_controller
   # Conflicts:
-  #	rm_common/include/rm_common/decision/command_sender.h
+  #	rm2_common
+
+
+/include/rm2_common
+
+
+/decision/command_sender.h
   #	rm_msgs/CMakeLists.txt
 * Merge branch 'master' into one_click_turn_cmd_sender
 * Modified the msg of engineer  to 'EngineerUi'
 * Merge branch 'master' into switch_camera_command_sender
   # Conflicts:
-  #	rm_referee/include/rm_referee/ui/trigger_change_ui.h
-  #	rm_referee/src/ui/trigger_change_ui.cpp
+  #	rm2_referee/include/rm2_referee/ui/trigger_change_ui.h
+  #	rm2_referee/src/ui/trigger_change_ui.cpp
 * Add multi_dof_commandsender.
 * Merge pull request `#120 <https://github.com/ye-luo-xi-tui/rm_control/issues/120>`_ from ye-luo-xi-tui/master
   0.1.18
@@ -147,7 +159,13 @@ Changelog for package rm_msgs
   Remove acceleration computing
 * Merge branch 'master' into acceleration
   # Conflicts:
-  #	rm_common/include/rm_common/decision/command_sender.h
+  #	rm2_common
+
+
+/include/rm2_common
+
+
+/decision/command_sender.h
 * Add accel to TrackData.msg and Add a filter.
 * Merge pull request `#104 <https://github.com/ye-luo-xi-tui/rm_control/issues/104>`_ from ye-luo-xi-tui/master
   0.1.17
@@ -186,14 +204,23 @@ Changelog for package rm_msgs
   Update 0.1.15
 * Add RobotID enum.
 * Delete /common/data.h, Update power_limit and heat_limit.
-* Move referee part from rm_common to rm_referee and modify ui sending logic.
+* Move referee part from rm2_common
+
+
+ to rm2_referee and modify ui sending logic.
 * Add referee is_online msg.
 * Add ManualToReferee msg.
 * Add referee msg.
 * Merge and fixed conflict.
 * Merge branch 'master' into referee
   # Conflicts:
-  #	rm_common/include/rm_common/decision/service_caller.h
+  #	rm2_common
+
+
+/include/rm2_common
+
+
+/decision/service_caller.h
   #	rm_msgs/CMakeLists.txt
   #	rm_msgs/msg/referee/GameRobotStatus.msg
   #	rm_msgs/msg/referee/GameStatus.msg
@@ -203,8 +230,20 @@ Changelog for package rm_msgs
 * Ui work success,ore ui is in test.
 * Merge branch 'referee1' of github.com:chenhuiYu00/rm_control into referee1
    Conflicts:
-  	rm_common/include/rm_common/decision/command_sender.h
-  	rm_common/include/rm_common/decision/service_caller.h
+  	rm2_common
+
+
+/include/rm2_common
+
+
+/decision/command_sender.h
+  	rm2_common
+
+
+/include/rm2_common
+
+
+/decision/service_caller.h
   	rm_msgs/msg/referee/CalibrationStatus.msg
   	rm_msgs/msg/referee/CapacityData.msg
   	rm_msgs/msg/referee/DetectionStatus.msg
@@ -214,24 +253,24 @@ Changelog for package rm_msgs
   	rm_msgs/msg/referee/GameStatus.msg
   	rm_msgs/msg/referee/PowerHeatData.msg
   	rm_msgs/msg/referee/StateCmd.msg
-  	rm_referee/config/standard3.yaml
-  	rm_referee/include/rm_referee/common/data.h
-  	rm_referee/include/rm_referee/common/referee_base.h
-  	rm_referee/include/rm_referee/engineer_referee.h
-  	rm_referee/include/rm_referee/hero_referee.h
-  	rm_referee/include/rm_referee/referee/referee.h
-  	rm_referee/include/rm_referee/referee/ui.h
-  	rm_referee/include/rm_referee/robot_referee.h
-  	rm_referee/include/rm_referee/standard_referee.h
-  	rm_referee/launch/load.launch
-  	rm_referee/src/common/referee_base.cpp
-  	rm_referee/src/engineer_referee.cpp
-  	rm_referee/src/hero_referee.cpp
-  	rm_referee/src/main.cpp
-  	rm_referee/src/referee/referee.cpp
-  	rm_referee/src/referee/ui.cpp
-  	rm_referee/src/robot_referee.cpp
-  	rm_referee/src/standard_referee.cpp
+  	rm2_referee/config/standard3.yaml
+  	rm2_referee/include/rm2_referee/common/data.h
+  	rm2_referee/include/rm2_referee/common/referee_base.h
+  	rm2_referee/include/rm2_referee/engineer_referee.h
+  	rm2_referee/include/rm2_referee/hero_referee.h
+  	rm2_referee/include/rm2_referee/referee/referee.h
+  	rm2_referee/include/rm2_referee/referee/ui.h
+  	rm2_referee/include/rm2_referee/robot_referee.h
+  	rm2_referee/include/rm2_referee/standard_referee.h
+  	rm2_referee/launch/load.launch
+  	rm2_referee/src/common/referee_base.cpp
+  	rm2_referee/src/engineer_referee.cpp
+  	rm2_referee/src/hero_referee.cpp
+  	rm2_referee/src/main.cpp
+  	rm2_referee/src/referee/referee.cpp
+  	rm2_referee/src/referee/ui.cpp
+  	rm2_referee/src/robot_referee.cpp
+  	rm2_referee/src/standard_referee.cpp
 * Merge branch 'master' into referee1
 * Fixed topic naming, add time stamp in referee msgs.
 * Fixed for test manual,Immature work.
@@ -251,13 +290,19 @@ Changelog for package rm_msgs
 -------------------
 * Merge branch 'master' into param
   # Conflicts:
-  #	rm_common/include/rm_common/decision/command_sender.h
+  #	rm2_common
+
+
+/include/rm2_common
+
+
+/decision/command_sender.h
 * Merge pull request `#64 <https://github.com/rm-controls/rm_control/issues/64>`_ from Edwinlinks/referee-msgs
-  Add msgs of rm_referee
+  Add msgs of rm2_referee
 * Delete the unnecessary msgs from CMakeLists.txt
 * Delete the unnecessary msg
 * Modify the code style error of referee msg
-* Add msgs of rm_referee
+* Add msgs of rm2_referee
 * Contributors: Edwinlinks, QiayuanLiao, yezi
 
 0.1.13 (2022-06-12)
@@ -335,7 +380,10 @@ Changelog for package rm_msgs
 * Merge pull request `#29 <https://github.com/ye-luo-xi-tui/rm_control/issues/29>`_ from Edwinlinks/tof_sensor_interface
   Completed tof_sensor_interface
 * Modified the reference order of header files and packet parsing of tof sensor, data type of dis_status
-* Add tof sensor interface in rm_common, add parsing can frame in can_bus.cpp, and add TofSensor.msg in rm_msgs.
+* Add tof sensor interface in rm2_common
+
+
+, add parsing can frame in can_bus.cpp, and add TofSensor.msg in rm_msgs.
 * Merge remote-tracking branch 'origin/master'
 * Add the service for the conversation between a camera and a imu.
 * Contributors: Edwinlinks, Jie j, QiayuanLiao, YuuinIH
