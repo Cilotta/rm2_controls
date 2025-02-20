@@ -14,7 +14,7 @@ void ImuComplementaryFilter::getOrientation(double& q0, double& q1, double& q2, 
 {
   filter_->getOrientation(q0, q1, q2, q3);
 }
-bool ImuComplementaryFilter::initFilter(imu_tools::ComplementaryFilter imu_data)
+bool ImuComplementaryFilter::initFilter(XmlRpc::XmlRpcValue& imu_data)
 {
   use_mag_ = imu_data.hasMember("use_mag") && (bool)imu_data["use_mag"];
   gain_acc_ = imu_data.hasMember("gain_acc") ? (double)imu_data["gain_acc"] : 0.01;
@@ -25,6 +25,19 @@ bool ImuComplementaryFilter::initFilter(imu_tools::ComplementaryFilter imu_data)
   resetFilter();
   return true;
 }
+
+// bool ImuComplementaryFilter::initFilter(rclcpp::Node::SharedPtr node) 
+// {
+//   node->get_parameter("use_mag", use_mag_);
+//   node->get_parameter_or("gain_acc", gain_acc_, 0.01);
+//   node->get_parameter_or("gain_mag", gain_mag_, 0.01);
+//   node->get_parameter_or("do_bias_estimation", do_bias_estimation_, true);
+//   node->get_parameter_or("bias_alpha", bias_alpha_, 0.01);
+//   node->get_parameter_or("do_adaptive_gain", do_adaptive_gain_, true);
+//   resetFilter();
+//   return true;
+// }
+
 void ImuComplementaryFilter::resetFilter()
 {
   filter_ = std::make_shared<imu_tools::ComplementaryFilter>();

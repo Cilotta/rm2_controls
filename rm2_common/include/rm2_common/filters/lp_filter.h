@@ -37,7 +37,8 @@
 
 #pragma once
 
-#include <dynamic_reconfigure/server.h>
+//#include <dynamic_reconfigure/server.h>
+#include <rclcpp/rclcpp.hpp>
 #include <realtime_tools/realtime_publisher.h>
 #include <rm2_msgs/msg/lp_data.hpp>
 
@@ -66,7 +67,7 @@ private:
   bool is_debug_{};
 
   rclcpp::Time prev_time_;
-  ros::Duration delta_t_;
+  rclcpp::Duration delta_t_;
 
-  std::shared_ptr<realtime_tools::RealtimePublisher<rm2_msgs::LpData>> realtime_pub_{};
+  std::shared_ptr<realtime_tools::RealtimePublisher<rm2_msgs::msg::LpData>> realtime_pub_{};
 };

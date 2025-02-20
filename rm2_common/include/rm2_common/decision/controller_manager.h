@@ -52,10 +52,10 @@ public:
   {
     if (!nh.has_parameter("controllers_list"))
       ROS_ERROR("No controllers defined");
-    ROS_INFO("Waiting for load_controller service...");
-    load_client_.waitForExistence();
-    rclcpp::Node nh_list(nh, "controllers_list");
-    XmlRpc::XmlRpcValue controllers;
+      ROS_INFO("Waiting for load_controller service...");
+      load_client_.waitForExistence();
+      rclcpp::Node nh_list(nh, "controllers_list");
+      XmlRpc::XmlRpcValue controllers;
     if (nh_list.get_parameter("state_controllers", controllers))
       for (int i = 0; i < controllers.size(); ++i)
       {

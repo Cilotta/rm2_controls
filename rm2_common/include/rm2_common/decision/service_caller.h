@@ -70,9 +70,9 @@ public:
     client_ = nh.serviceClient<ServiceType>(service_name_);
   }
 
-  ServiceCallerBase(XmlRpc::XmlRpcValue& controllers, rclcpp::Node& nh, const std::string& service_name = "") : fail_count_(0), fail_limit_(0)
+  ServiceCallerBase(rclcpp::Parameter& controllers, rclcpp::Node& nh, const std::string& service_name = "") : fail_count_(0), fail_limit_(0)
   {
-    if (controllers.hasMember("service_name"))
+    if (controllers->has_Member("service_name"))
       service_name_ = static_cast<std::string>(controllers["service_name"]);
     else 
     {
@@ -180,7 +180,7 @@ public:
   {
   }
   
-  QueryCalibrationServiceCaller(XmlRpc::XmlRpcValue& controllers, rclcpp::Node& nh)
+  QueryCalibrationServiceCaller(rclcpp::Parameter& controllers, rclcpp::Node& nh)
     : ServiceCallerBase<control_msgs::srv::QueryCalibrationState>(controllers, nh)
   {
   }

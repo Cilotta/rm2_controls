@@ -38,16 +38,16 @@
 #include "rm2_common/filters/lp_filter.h"
 #include "rm2_common/ros_utilities.h" 
 
-LowPassFilter::LowPassFilter(rclcpp::Node& nh)
+LowPassFilter::LowPassFilter(rclcpp::Node& nh) : delta_t_(rclcpp::Duration::from_seconds(0))
 {
-  nh.param("lp_cutoff_frequency", cutoff_frequency_, -1.);
-  nh.param("lp_debug", is_debug_, false);
+  nh.get_parameter_or("lp_cutoff_frequency", cutoff_frequency_, -1.0);
+  nh.get_parameter_or("lp_debug", is_debug_, false);
 
   if (is_debug_)
-    realtime_pub_.reset(new realtime_tools::RealtimePublisher<rm2_msgs::LpData>(nh, "lp_filter", 100));
+    realtime_pub_ = std::make_shared<realtime_tools::RealtimePublisher<rm2_msgs::msg::LpData>>(nh, "lp_filter", 100);
 }
 
-LowPassFilter::LowPassFilter(double cutoff_freq)
+LowPassFilter::LowPassFilter(double cutoff_freq) : delta_t_(rclcpp::Duration::from_seconds(0))
 {
   is_debug_ = false;
   cutoff_frequency_ = cutoff_freq;
@@ -62,15 +62,15 @@ void LowPassFilter::input(double in, rclcpp::Time time)
   in_[1] = in_[0];
   in_[0] = in;
 
-  if (!prev_time_.isZero())  // Not first time through the program
+  if (prev_time_.nanoseconds() != 0)  // Not first time through the program
   {
     delta_t_ = time - prev_time_;
     prev_time_ = time;
-    if (0 == delta_t_.toSec())
+    if (0 == delta_t_.seconds())
     {
-      ROS_ERROR("delta_t is 0, skipping this loop. Possible overloaded cpu "
-                "at time: %f",
-                time.toSec());
+      RCLCPP_ERROR(rclcpp::get_logger("LowPassFilter"), 
+                   "delta_t is 0, skipping this loop. Possible overloaded cpu at time: %f", 
+                   time.seconds());
       return;
     }
   }
@@ -83,7 +83,7 @@ void LowPassFilter::input(double in, rclcpp::Time time)
   if (cutoff_frequency_ != -1 && cutoff_frequency_ > 0)
   {
     // Check if tan(_) is really small, could cause c = NaN
-    tan_filt_ = tan((cutoff_frequency_ * 6.2832) * delta_t_.toSec() / 2.);
+    tan_filt_ = tan((cutoff_frequency_ * 6.2832) * delta_t_.seconds() / 2.);
     // Avoid tan(0) ==> NaN
     if ((tan_filt_ <= 0.) && (tan_filt_ > -0.01))
       tan_filt_ = -0.01;
@@ -111,7 +111,7 @@ void LowPassFilter::input(double in, rclcpp::Time time)
 
 void LowPassFilter::input(double in)
 {
-  input(in, rclcpp::Time::now());
+  input(in, rclcpp::Clock().now());
 }
 
 double LowPassFilter::output()

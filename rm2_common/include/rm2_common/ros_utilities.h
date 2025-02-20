@@ -38,44 +38,44 @@
 #pragma once
 
 #include <rclcpp/rclcpp.hpp>
-#include <XmlRpcException.h>
+//#include <XmlRpcException.h>
 
 
 template <typename T>
 T getParam(rclcpp::Node& pnh, const std::string& param_name, const T& default_val)
 {
   T param_val;
-  pnh.param<T>(param_name, param_val, default_val);
+  pnh.get_parameter<T>(param_name, param_val, default_val);
   return param_val;
 }
 
-inline double xmlRpcGetDouble(XmlRpc::XmlRpcValue& value)
+inline double rclParamGetDouble(rclcpp::Parameter& value)
 {
-  if (value.getType() == XmlRpc::XmlRpcValue::TypeInt)
+  if (value.get_type() == rclcpp::ParameterType::PARAMETER_INTEGER)
   {
-    const int tmp = value;
+    const int tmp = value.as_int();
     return (double)tmp;
   }
   else
-    return value;
+    return value.as_double();
 }
 
-inline double xmlRpcGetDouble(XmlRpc::XmlRpcValue& value, int field)
-{
-  ROS_ASSERT((value[field].getType() == XmlRpc::XmlRpcValue::TypeDouble) ||
-             (value[field].getType() == XmlRpc::XmlRpcValue::TypeInt));
-  XmlRpc::XmlRpcValue value_xml = value[field];
-  return xmlRpcGetDouble(value[field]);
-}
+// inline double xmlRpcGetDouble(XmlRpc::XmlRpcValue& value, int field)
+// {
+//   ROS_ASSERT((value[field].getType() == XmlRpc::XmlRpcValue::TypeDouble) ||
+//              (value[field].getType() == XmlRpc::XmlRpcValue::TypeInt));
+//   XmlRpc::XmlRpcValue value_xml = value[field];
+//   return xmlRpcGetDouble(value[field]);
+// }
 
-inline double xmlRpcGetDouble(XmlRpc::XmlRpcValue& value, const std::string& field, double default_value)
-{
-  if (value.hasMember(field))
-  {
-    ROS_ASSERT((value[field].getType() == XmlRpc::XmlRpcValue::TypeDouble) ||
-               (value[field].getType() == XmlRpc::XmlRpcValue::TypeInt));
-    return xmlRpcGetDouble(value[field]);
-  }
-  else
-    return default_value;
-}
+// inline double rclParamGetDouble(rclcpp::Parameter& value, const std::string& field, double default_value)
+// {
+//   if (value.hasMember(field))
+//   {
+//     ROS_ASSERT((value[field].getType() == rclcpp::ParameterType::PARAMETER_DOUBLE) ||
+//                (value[field].getType() == rclcpp::ParameterType::PARAMETER_INTEGER));
+//     return rclParamGetDouble(value[field]);
+//   }
+//   else
+//     return default_value;
+// }

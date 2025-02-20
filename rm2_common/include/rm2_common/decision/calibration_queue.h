@@ -45,21 +45,38 @@ namespace rm2_common
 class CalibrationService
 {
 public:
-  CalibrationService(XmlRpc::XmlRpcValue& rpc_value, rclcpp::Node& nh)
+  CalibrationService(rclcpp::Parameter srv_param, rclcpp::Node& nh)
   {
-    ROS_ASSERT(rpc_value.hasMember("start_controllers"));
-    ROS_ASSERT(rpc_value.hasMember("stop_controllers"));
-    ROS_ASSERT(rpc_value.hasMember("services_name"));
-    ROS_ASSERT(rpc_value["start_controllers"].getType() == XmlRpc::XmlRpcValue::TypeArray);
-    ROS_ASSERT(rpc_value["stop_controllers"].getType() == XmlRpc::XmlRpcValue::TypeArray);
-    ROS_ASSERT(rpc_value["services_name"].getType() == XmlRpc::XmlRpcValue::TypeArray);
-    start_controllers = getControllersName(rpc_value["start_controllers"]);
-    stop_controllers = getControllersName(rpc_value["stop_controllers"]);
-    for (int i = 0; i < rpc_value["services_name"].size(); ++i)
+    //ROS_ASSERT(nh.get_parameter("start_controllers"),srv_param); # has edited
+    //ROS_ASSERT(rpc_value.hasMember("stop_controllers"));
+    //ROS_ASSERT(rpc_value.hasMember("services_name"));
+    //ROS_ASSERT(rpc_value["start_controllers"].getType() == XmlRpc::XmlRpcValue::TypeArray);
+    //ROS_ASSERT(rpc_value["stop_controllers"].getType() == XmlRpc::XmlRpcValue::TypeArray);
+    //ROS_ASSERT(rpc_value["services_name"].getType() == XmlRpc::XmlRpcValue::TypeArray);
+    nh.declare_parameter("start_controllers", rclcpp::ParameterType::PARAMETER_STRING_ARRAY);
+    nh.declare_parameter("stop_controllers", rclcpp::ParameterType::PARAMETER_STRING_ARRAY);
+    nh.declare_parameter("services_name", rclcpp::ParameterType::PARAMETER_STRING_ARRAY);
+    
+    //start_controllers = getControllersName(rpc_value["start_controllers"]);
+    //stop_controllers = getControllersName(rpc_value["stop_controllers"]);
+    nh.get_parameter("start_controllers",start_controllers);
+    nh.get_parameter("stop_controllers",stop_controllers);
+    nh.get_parameter("services_name",services_name);
+
+    // for (int i = 0; i < rpc_value["services_name"].size(); ++i)
+    // {
+    //   query_services.push_back(new QueryCalibrationServiceCaller(nh, rpc_value["services_name"][i]));
+    // }
+    for (int i = 0; i < services_name.size(); ++i)
     {
-      query_services.push_back(new QueryCalibrationServiceCaller(nh, rpc_value["services_name"][i]));
+      query_services.push_back(new QueryCalibrationServiceCaller(nh, services_name[i]));
     }
   }
+  // void setCalibratedFalse()
+  // {
+  //   for (auto& service : query_services)
+  //     service->getService().response.is_calibrated = false;
+  // }
   void setCalibratedFalse()
   {
     for (auto& service : query_services)
@@ -77,7 +94,7 @@ public:
     for (auto& service : query_services)
       service->callService();
   }
-  std::vector<std::string> start_controllers, stop_controllers;
+  std::vector<std::string> start_controllers, stop_controllers, services_name;
   std::vector<QueryCalibrationServiceCaller*> query_services;
 
 private:

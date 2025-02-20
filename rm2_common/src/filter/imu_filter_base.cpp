@@ -6,14 +6,14 @@
 
 namespace rm2_common
 {
-bool ImuFilterBase::init(XmlRpc::XmlRpcValue& imu_data, const std::string& name)
+bool ImuFilterBase::init(rclcpp::Parameter& imu_data, const std::string& name)
 {
-  rclcpp::Node nh("~");
+  auto node = rclcpp::Node::make_shared("~");
   frame_id_ = (std::string)imu_data["frame_id"];
   initFilter(imu_data);
-  imu_data_pub_ = nh.advertise<sensor_msgs::Imu>(name + "/data", 100);
-  imu_temp_pub_ = nh.advertise<sensor_msgs::Temperature>(name + "/temperature", 100);
-  trigger_time_pub_ = nh.advertise<sensor_msgs::TimeReference>(name + "/trigger_time", 100);
+  imu_data_pub_ = node->create_publisher<sensor_msgs::msg::Imu>(name + "/data", 100);
+  imu_temp_pub_ = node->create_publisher<sensor_msgs::msg::Temperature>(name + "/temperature", 100);
+  trigger_time_pub_ = node->create_publisher<sensor_msgs::msg::TimeReference>(name + "/trigger_time", 100);
   return true;
 }
 
@@ -34,7 +34,7 @@ void ImuFilterBase::update(rclcpp::Time time, double* accel, double* omega, doub
     return;
   }
   // Update the filter.
-  filterUpdate(accel[0], accel[1], accel[2], omega[0], omega[1], omega[2], (time - last_update_).toSec());
+  filterUpdate(accel[0], accel[1], accel[2], omega[0], omega[1], omega[2], (time - last_update_).seconds());
   last_update_ = time;
   getOrientation(ori[3], ori[0], ori[1], ori[2]);
   if (camera_trigger)
@@ -53,15 +53,15 @@ void ImuFilterBase::update(rclcpp::Time time, double* accel, double* omega, doub
     imu_pub_data_.orientation_covariance = { ori_cov[0], 0., 0., 0., ori_cov[4], 0., 0., 0., ori_cov[8] };
     imu_pub_data_.angular_velocity_covariance = { omega_cov[0], 0., 0., 0., omega_cov[4], 0., 0., 0., omega_cov[8] };
     imu_pub_data_.linear_acceleration_covariance = { accel_cov[0], 0., 0., 0., accel_cov[4], 0., 0., 0., accel_cov[8] };
-    imu_data_pub_.publish(imu_pub_data_);
+    imu_data_pub_->publish(imu_pub_data_);
 
     trigger_time_pub_data_.header.stamp = time;
     trigger_time_pub_data_.time_ref = time;
-    trigger_time_pub_.publish(trigger_time_pub_data_);
+    trigger_time_pub_->publish(trigger_time_pub_data_);
 
     temp_pub_data_.header.stamp = time;
     temp_pub_data_.temperature = temp;
-    imu_temp_pub_.publish(temp_pub_data_);
+    imu_temp_pub_->publish(temp_pub_data_);
   }
 }
 

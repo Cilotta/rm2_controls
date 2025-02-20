@@ -64,6 +64,7 @@
 #include "rm2_common/decision/power_limit.h"
 #include "rm2_common/linear_interpolation.h"
 #include "rm2_common/filters/filters.h"
+#include <cstring>
 
 namespace rm2_common
 {
@@ -96,7 +97,7 @@ public:
   virtual void updateCapacityData(const rm2_msgs::msg::PowerManagementSampleAndStatusData data)
   {
   }
-  virtual void updatePowerHeatData(const rm2_msgs::msg:PowerHeatData data)
+  virtual void updatePowerHeatData(const rm2_msgs::msg::PowerHeatData data)
   {
   }
   virtual void setZero() = 0;
@@ -108,7 +109,7 @@ public:
 protected:
   std::string topic_;
   uint32_t queue_size_;
-  ros::Publisher pub_;
+  rclcpp::Publisher pub_;
   MsgType msg_;
 };
 
@@ -145,19 +146,20 @@ class Vel2DCommandSender : public CommandSenderBase<geometry_msgs::msg::Twist>
 public:
   explicit Vel2DCommandSender(rclcpp::Node& nh) : CommandSenderBase<geometry_msgs::msg::Twist>(nh)
   {
-    XmlRpc::XmlRpcValue xml_rpc_value;
-    if (!nh.get_parameter("max_linear_x", xml_rpc_value))
-      ROS_ERROR("Max X linear velocity no defined (namespace: %s)", nh.getNamespace().c_str());
+    rclcpp::Parameter rclcpp_parameter;
+    if (!nh.get_parameter("max_linear_x", rclcpp_parameter))
+      RCLCPP_ERROR(nh.get_logger(), "Max X linear velocity no defined (namespace: %s)", nh.get_namespace().c_str());
+      //ROS_ERROR("Max X linear velocity no defined (namespace: %s)", nh.get_namespace().c_str());
     else
-      max_linear_x_.init(xml_rpc_value);
-    if (!nh.get_parameter("max_linear_y", xml_rpc_value))
-      ROS_ERROR("Max Y linear velocity no defined (namespace: %s)", nh.getNamespace().c_str());
+      max_linear_x_.init(rclcpp_parameter);
+    if (!nh.get_parameter("max_linear_y", rclcpp_parameter))
+      ROS_ERROR("Max Y linear velocity no defined (namespace: %s)", nh.get_namespace().c_str());
     else
-      max_linear_y_.init(xml_rpc_value);
-    if (!nh.get_parameter("max_angular_z", xml_rpc_value))
-      ROS_ERROR("Max Z angular velocity no defined (namespace: %s)", nh.getNamespace().c_str());
+      max_linear_y_.init(rclcpp_parameter);
+    if (!nh.get_parameter("max_angular_z", rclcpp_parameter))
+      ROS_ERROR("Max Z angular velocity no defined (namespace: %s)", nh.get_namespace().c_str());
     else
-      max_angular_z_.init(xml_rpc_value);
+      max_angular_z_.init(rclcpp_parameter);
     std::string topic;
     nh.get_parameter("power_limit_topic", topic);
     target_vel_yaw_threshold_ = getParam(nh, "target_vel_yaw_threshold", 3.);

@@ -19,7 +19,7 @@ public:
 private:
 
   void filterUpdate(double ax, double ay, double az, double wx, double wy, double wz, double dt) override;
-  bool initFilter() override;
+  bool initFilter(rclcpp::Parameter& imu_data) override;
   void resetFilter() override;
   // Parameters:
   double gain_acc_;
